@@ -2,7 +2,7 @@ import React from 'react';
 import { CATEGORIES, QUESTIONS } from '../constants';
 import { GameState } from '../types';
 import { motion } from 'framer-motion';
-import { Globe, Wifi, Network, Share2, Hash } from 'lucide-react';
+import { Globe, Wifi, Network, Share2, Hash, Lock } from 'lucide-react';
 
 interface Props {
   gameState: GameState;
@@ -15,7 +15,8 @@ const IconMap: Record<string, React.FC<any>> = {
   'Wifi': Wifi,
   'Network': Network,
   'Share2': Share2,
-  'Hash': Hash
+  'Hash': Hash,
+  'Lock': Lock
 };
 
 export const GameBoard: React.FC<Props> = ({ gameState, onQuestionSelect }) => {
@@ -27,7 +28,7 @@ export const GameBoard: React.FC<Props> = ({ gameState, onQuestionSelect }) => {
 
   return (
     <div className="flex-1 p-4 md:p-8 overflow-y-auto">
-      <div className="grid grid-cols-5 gap-4 h-full max-w-7xl mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 h-full max-w-7xl mx-auto">
         {questionsByCategory.map((cat) => {
           const Icon = IconMap[cat.iconName] || Globe;
           return (
@@ -51,7 +52,7 @@ export const GameBoard: React.FC<Props> = ({ gameState, onQuestionSelect }) => {
                     whileTap={!isAnswered ? { scale: 0.95 } : {}}
                     className={`
                       flex-1 rounded-xl font-display font-bold text-3xl shadow-md transition-all border-2
-                      flex items-center justify-center min-h-[100px]
+                      flex items-center justify-center min-h-[90px]
                       ${isAnswered 
                         ? 'bg-black/20 text-white/10 border-transparent cursor-default' 
                         : 'bg-white text-game-primary border-game-primary hover:text-white cursor-pointer'

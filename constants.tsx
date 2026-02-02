@@ -6,6 +6,7 @@ export const CATEGORIES: Category[] = [
   { id: 'types', title: 'LAN, MAN, WAN', iconName: 'Network' },
   { id: 'topo', title: 'Topologies', iconName: 'Share2' },
   { id: 'ip', title: 'IP Address', iconName: 'Hash' },
+  { id: 'sec', title: 'Security & Cloud', iconName: 'Lock' },
 ];
 
 export const TEAM_COLORS = [
@@ -60,6 +61,12 @@ export const QUESTIONS: Question[] = [
     options: createOptions(1, 'Hub', 'Router', 'Switch', 'Repeater'),
     explanation: 'Routers are the "traffic controllers" of the internet, directing packets between different networks.'
   },
+  {
+    id: 'b-600', categoryId: 'basics', points: 600,
+    questionText: 'What does "IoT" stand for?',
+    options: createOptions(2, 'Input of Technology', 'Internal Office Tools', 'Internet of Things', 'International Online Trade'),
+    explanation: 'IoT refers to everyday objects (lights, fridges, cars) connected to the internet.'
+  },
 
   // --- MEDIA ---
   {
@@ -92,6 +99,12 @@ export const QUESTIONS: Question[] = [
     options: createOptions(2, 'Bandwidth', 'Throughput', 'Latency', 'Frequency'),
     explanation: 'Latency (or ping) is the time delay. High latency causes lag in games or calls.'
   },
+  {
+    id: 'm-600', categoryId: 'media', points: 600,
+    questionText: 'Which cellular technology is the newest and provides the fastest mobile internet speeds?',
+    options: createOptions(2, '3G', '4G LTE', '5G', 'GPRS'),
+    explanation: '5G offers higher speeds, lower latency, and capacity for more devices than 4G.'
+  },
 
   // --- TYPES ---
   {
@@ -123,6 +136,12 @@ export const QUESTIONS: Question[] = [
     questionText: 'A security device that sits between a private network and the public internet is called a...',
     options: createOptions(3, 'Switch', 'Server', 'Modem', 'Firewall'),
     explanation: 'A Firewall filters traffic, blocking unauthorized access to the internal network.'
+  },
+  {
+    id: 't-600', categoryId: 'types', points: 600,
+    questionText: 'A private network accessible only to an organization\'s staff is called an...',
+    options: createOptions(0, 'Intranet', 'Extranet', 'Internet', 'Dark Web'),
+    explanation: 'An Intranet is a private internal network, while the Internet is public.'
   },
 
   // --- TOPOLOGIES ---
@@ -160,6 +179,12 @@ export const QUESTIONS: Question[] = [
     options: createOptions(0, 'Star and Bus', 'Ring and Mesh', 'Star and Ring', 'Mesh and Bus'),
     explanation: 'A Tree topology typically consists of Star networks connected via a Bus backbone.'
   },
+  {
+    id: 'top-600', categoryId: 'topo', points: 600,
+    questionText: 'Which topology is a mix of two or more different topologies?',
+    options: createOptions(2, 'Complex', 'Double', 'Hybrid', 'Compound'),
+    explanation: 'A Hybrid topology combines multiple types (e.g., Star-Bus) to fit specific needs.'
+  },
 
   // --- IP BASICS ---
   {
@@ -191,5 +216,49 @@ export const QUESTIONS: Question[] = [
     questionText: 'Which system translates human-friendly names like "google.com" into IP addresses?',
     options: createOptions(3, 'DHCP', 'HTTP', 'VPN', 'DNS'),
     explanation: 'DNS (Domain Name System) is the "phonebook" of the internet.'
+  },
+  {
+    id: 'ip-600', categoryId: 'ip', points: 600,
+    questionText: 'Every network card has a permanent, unique physical ID called a...',
+    options: createOptions(1, 'IP Address', 'MAC Address', 'DNS Name', 'Zip Code'),
+    explanation: 'The MAC (Media Access Control) address is hard-coded into the hardware.'
+  },
+
+  // --- SECURITY & CLOUD ---
+  {
+    id: 'sec-100', categoryId: 'sec', points: 100,
+    questionText: 'What is a simple way to protect your account from unauthorized access?',
+    options: createOptions(0, 'Use a strong, unique password', 'Write your password on a post-it', 'Use "password123"', 'Share it with your best friend'),
+    explanation: 'Complex passwords prevent easy guessing or hacking.'
+  },
+  {
+    id: 'sec-200', categoryId: 'sec', points: 200,
+    questionText: 'Harmful software designed to damage or gain unauthorized access to a computer is called...',
+    options: createOptions(2, 'Hardware', 'Firmware', 'Malware', 'Shareware'),
+    explanation: 'Malware includes viruses, worms, and ransomware.'
+  },
+  {
+    id: 'sec-300', categoryId: 'sec', points: 300,
+    questionText: 'An email pretending to be from your bank asking you to click a link is likely...',
+    options: createOptions(1, 'Fishing', 'Phishing', 'Spamming', 'Hacking'),
+    explanation: 'Phishing attacks try to trick you into revealing personal information.'
+  },
+  {
+    id: 'sec-400', categoryId: 'sec', points: 400,
+    questionText: 'When you store files on Google Drive or Dropbox, you are using...',
+    options: createOptions(1, 'Local Storage', 'Cloud Storage', 'Flash Storage', 'RAM'),
+    explanation: 'Cloud storage saves data on remote servers accessed via the internet.'
+  },
+  {
+    id: 'sec-500', categoryId: 'sec', points: 500,
+    questionText: 'Which tool creates a secure, encrypted "tunnel" for your internet connection?',
+    options: createOptions(3, 'GPS', 'ISP', 'DNS', 'VPN'),
+    explanation: 'A VPN (Virtual Private Network) hides your activity and protects data on public WiFi.'
+  },
+  {
+    id: 'sec-600', categoryId: 'sec', points: 600,
+    questionText: 'What does the "S" in "HTTPS" stand for?',
+    options: createOptions(0, 'Secure', 'Simple', 'Speed', 'Standard'),
+    explanation: 'HTTPS (Hypertext Transfer Protocol Secure) encrypts communication between browser and website.'
   },
 ];

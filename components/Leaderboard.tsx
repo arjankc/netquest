@@ -104,9 +104,9 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
         {sortedTeams.map((team, idx) => (
           <motion.div
             key={team.id}
-            initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.4 + idx * 0.15, type: "spring" }}
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 + idx * 0.15, type: "spring", bounce: 0.4 }}
             className={`
                 relative flex items-center justify-between p-5 rounded-2xl border transition-all hover:scale-[1.02]
                 ${idx === 0 
