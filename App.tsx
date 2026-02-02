@@ -4,9 +4,9 @@ import { GameBoard } from './components/GameBoard';
 import { QuestionModal } from './components/QuestionModal';
 import { Leaderboard } from './components/Leaderboard';
 import { GameState, Team, Question } from './types';
-import { QUESTIONS, TEAM_COLORS } from './constants';
+import { QUESTIONS, TEAM_COLORS, TEAM_ICONS } from './constants';
 import { gameAudio } from './utils/audio';
-import { Volume2, VolumeX, RefreshCw } from 'lucide-react';
+import { Volume2, VolumeX, RefreshCw, Rocket, Zap, Star, Crown, Smile, Heart } from 'lucide-react';
 
 const INITIAL_STATE: GameState = {
   teams: [],
@@ -14,6 +14,16 @@ const INITIAL_STATE: GameState = {
   phase: 'setup',
   answeredQuestions: [],
   history: []
+};
+
+const IconMap: Record<string, React.FC<any>> = {
+  'Rocket': Rocket,
+  'Zap': Zap,
+  'Star': Star,
+  'Crown': Crown,
+  'Smile': Smile,
+  'Heart': Heart,
+  'default': Star
 };
 
 export default function App() {
@@ -32,7 +42,7 @@ export default function App() {
       name,
       score: 0,
       color: TEAM_COLORS[idx % TEAM_COLORS.length],
-      avatarIcon: 'default'
+      avatarIcon: TEAM_ICONS[Math.floor(Math.random() * TEAM_ICONS.length)]
     }));
 
     setGameState({
@@ -112,19 +122,24 @@ export default function App() {
           <h1 className="text-3xl font-display font-bold tracking-wider text-white hidden md:block">NETQUEST</h1>
           
           <div className="flex gap-4">
-            {gameState.teams.map((team, idx) => (
-              <div 
-                key={team.id}
-                className={`
-                  flex flex-col items-center px-4 py-2 rounded-lg transition-all duration-300
-                  ${idx === gameState.currentTeamIndex ? 'bg-white/20 scale-110 border-2 border-game-accent' : 'opacity-60 scale-90'}
-                `}
-              >
-                <div className={`w-3 h-3 rounded-full mb-1 ${team.color}`}></div>
-                <span className="text-xs font-bold uppercase tracking-wide">{team.name}</span>
-                <span className="font-bold text-xl">{team.score}</span>
-              </div>
-            ))}
+            {gameState.teams.map((team, idx) => {
+              const Icon = IconMap[team.avatarIcon] || Star;
+              return (
+                <div 
+                  key={team.id}
+                  className={`
+                    flex flex-col items-center px-4 py-2 rounded-lg transition-all duration-300
+                    ${idx === gameState.currentTeamIndex ? 'bg-white/20 scale-110 border-2 border-game-accent' : 'opacity-60 scale-90'}
+                  `}
+                >
+                  <div className={`p-1.5 rounded-full mb-1 ${team.color} shadow-sm`}>
+                    <Icon size={16} className="text-white" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-wide">{team.name}</span>
+                  <span className="font-bold text-xl">{team.score}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
