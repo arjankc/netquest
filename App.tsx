@@ -112,57 +112,66 @@ export default function App() {
   }
 
   const currentTeam = gameState.teams[gameState.currentTeamIndex];
+  const CurrentTeamIcon = IconMap[currentTeam.avatarIcon] || Star;
 
   return (
-    <div className="flex flex-col h-screen bg-game-dark text-white overflow-hidden font-sans">
+    <div className="flex flex-col h-screen w-full bg-game-dark text-white overflow-hidden font-sans">
       
       {/* HUD Header */}
-      <header className="bg-game-surface border-b border-white/10 p-4 shadow-xl z-10 flex justify-between items-center">
-        <div className="flex items-center gap-6">
-          <h1 className="text-3xl font-display font-bold tracking-wider text-white hidden md:block">NETQUEST</h1>
+      <header className="bg-game-surface border-b border-white/10 p-2 md:p-4 shadow-xl z-10 flex flex-row justify-between items-center gap-2 md:gap-6 shrink-0">
+        
+        {/* Left Side: Logo and Teams */}
+        <div className="flex items-center gap-2 md:gap-6 overflow-hidden flex-1">
+          <h1 className="text-3xl font-display font-bold tracking-wider text-white hidden lg:block">NETQUEST</h1>
           
-          <div className="flex gap-4">
+          <div className="flex gap-2 md:gap-4 overflow-x-auto pb-1 no-scrollbar mask-linear-fade w-full md:w-auto">
             {gameState.teams.map((team, idx) => {
               const Icon = IconMap[team.avatarIcon] || Star;
               return (
                 <div 
                   key={team.id}
                   className={`
-                    flex flex-col items-center px-4 py-2 rounded-lg transition-all duration-300
-                    ${idx === gameState.currentTeamIndex ? 'bg-white/20 scale-110 border-2 border-game-accent' : 'opacity-60 scale-90'}
+                    flex flex-col items-center px-2 py-1 md:px-4 md:py-2 rounded-lg transition-all duration-300 shrink-0
+                    ${idx === gameState.currentTeamIndex ? 'bg-white/20 scale-100 md:scale-110 border border-game-accent' : 'opacity-60 scale-90'}
                   `}
                 >
-                  <div className={`p-1.5 rounded-full mb-1 ${team.color} shadow-sm`}>
+                  <div className={`p-1 rounded-full mb-0 md:mb-1 ${team.color} shadow-sm hidden md:block`}>
                     <Icon size={16} className="text-white" />
                   </div>
-                  <span className="text-xs font-bold uppercase tracking-wide">{team.name}</span>
-                  <span className="font-bold text-xl">{team.score}</span>
+                  <span className="text-[10px] md:text-xs font-bold uppercase tracking-wide truncate max-w-[60px] md:max-w-none">{team.name}</span>
+                  <span className="font-bold text-sm md:text-xl">{team.score}</span>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className={`px-6 py-2 rounded-full ${currentTeam.color} flex items-center gap-2 shadow-lg animate-pulse`}>
-            <span className="text-sm font-bold uppercase opacity-80">Current Turn:</span>
-            <span className="text-xl font-bold">{currentTeam.name}</span>
+        {/* Right Side: Current Turn and Controls */}
+        <div className="flex items-center gap-2 md:gap-4 shrink-0">
+          <div className={`px-3 py-1 md:px-6 md:py-2 rounded-full ${currentTeam.color} flex items-center gap-2 shadow-lg animate-pulse`}>
+             <CurrentTeamIcon size={16} className="text-white md:hidden" />
+             <div className="hidden md:flex flex-col items-end leading-none">
+                 <span className="text-[10px] font-bold uppercase opacity-80">Turn</span>
+             </div>
+             <span className="text-sm md:text-xl font-bold truncate max-w-[80px] md:max-w-none">{currentTeam.name}</span>
           </div>
           
-          <div className="h-8 w-px bg-white/20 mx-2"></div>
+          <div className="h-6 w-px bg-white/20 mx-1 md:mx-2 hidden sm:block"></div>
           
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 hover:bg-white/10 rounded-full">
-            {soundEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
-          </button>
-          
-          <button onClick={() => { if(confirm("Restart game?")) resetGame() }} className="p-2 hover:bg-white/10 rounded-full text-game-error">
-             <RefreshCw size={24} />
-          </button>
+          <div className="flex gap-1">
+            <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 hover:bg-white/10 rounded-full">
+              {soundEnabled ? <Volume2 size={20} className="md:w-6 md:h-6" /> : <VolumeX size={20} className="md:w-6 md:h-6" />}
+            </button>
+            
+            <button onClick={() => { if(confirm("Restart game?")) resetGame() }} className="p-2 hover:bg-white/10 rounded-full text-game-error">
+              <RefreshCw size={20} className="md:w-6 md:h-6" />
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Main Board */}
-      <main className="flex-1 overflow-hidden relative">
+      {/* Main Board - Added flex flex-col and min-h-0 to ensure children scroll correctly */}
+      <main className="flex-1 flex flex-col min-h-0 overflow-hidden relative w-full">
         <GameBoard gameState={gameState} onQuestionSelect={handleQuestionSelect} />
       </main>
 
