@@ -163,7 +163,7 @@ export default function App() {
               {soundEnabled ? <Volume2 size={20} className="md:w-6 md:h-6" /> : <VolumeX size={20} className="md:w-6 md:h-6" />}
             </button>
             
-            <button onClick={() => { if(confirm("Restart game?")) resetGame() }} className="p-2 hover:bg-white/10 rounded-full text-game-error">
+            <button onClick={() => { if(confirm("Restart game?")) resetGame() }} className="p-2 hover:bg-white/10 rounded-full text-red-400">
               <RefreshCw size={20} className="md:w-6 md:h-6" />
             </button>
           </div>

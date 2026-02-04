@@ -50,8 +50,8 @@ export const StartScreen: React.FC<Props> = ({ onStartGame }) => {
         </motion.div>
 
         <div className="w-full max-w-[95%] md:max-w-[700px] lg:max-w-3xl bg-game-surface p-6 md:p-10 rounded-2xl shadow-2xl border-2 border-white/10">
-          <h2 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-white flex items-center justify-center gap-3">
-            <Users className="text-game-primary" /> Select Number of Teams
+          <h2 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-indigo-200 flex items-center justify-center gap-3">
+            <Users className="text-indigo-400" /> Select Number of Teams
           </h2>
           
           {/* Counter Control */}
@@ -94,7 +94,7 @@ export const StartScreen: React.FC<Props> = ({ onStartGame }) => {
 
           <button 
             onClick={handleStart}
-            className="w-full bg-game-success hover:bg-green-400 text-white text-2xl md:text-3xl font-bold py-4 md:py-6 rounded-xl shadow-xl flex items-center justify-center gap-4 transition-transform hover:scale-105 active:scale-95"
+            className="w-full bg-game-success hover:bg-green-600 text-white text-2xl md:text-3xl font-bold py-4 md:py-6 rounded-xl shadow-xl flex items-center justify-center gap-4 transition-transform hover:scale-105 active:scale-95"
           >
             <Play size={32} className="md:w-10 md:h-10" fill="currentColor" />
             START GAME

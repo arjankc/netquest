@@ -10,12 +10,12 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const TEAM_COLORS = [
-  'bg-red-500',
-  'bg-blue-500',
-  'bg-green-500',
-  'bg-purple-500',
-  'bg-orange-500',
-  'bg-pink-500'
+  'bg-red-600',
+  'bg-blue-600',
+  'bg-green-700',
+  'bg-purple-600',
+  'bg-orange-700',
+  'bg-pink-600'
 ];
 
 export const TEAM_ICONS = ['Rocket', 'Zap', 'Star', 'Crown', 'Smile', 'Heart'];

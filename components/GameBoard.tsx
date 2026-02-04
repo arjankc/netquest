@@ -62,7 +62,7 @@ export const GameBoard: React.FC<Props> = ({ gameState, onQuestionSelect }) => {
                         flex-1 rounded-xl font-display font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl shadow-md transition-all border-2
                         flex items-center justify-center min-h-[50px] md:min-h-[70px] lg:min-h-[80px]
                         ${isAnswered 
-                          ? 'bg-black/20 text-white/10 border-transparent cursor-default' 
+                          ? 'bg-black/20 text-white/25 border-transparent cursor-default' 
                           : 'bg-white text-game-primary border-game-primary hover:text-white cursor-pointer'
                         }
                       `}
