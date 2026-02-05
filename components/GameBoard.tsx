@@ -27,27 +27,26 @@ export const GameBoard: React.FC<Props> = ({ gameState, onQuestionSelect }) => {
   }));
 
   return (
-    <div className="w-full h-full p-2 md:p-6 lg:p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+    <div className="w-full h-full p-2 md:p-4 flex flex-col">
       {/* 
-        Grid Layout Logic:
-        - Mobile (default): 1 column
-        - Small Tablet (sm): 2 columns
-        - Tablet/Laptop (md/lg): 3 columns (Readable cards)
-        - Desktop (xl): 6 columns (Full Board view)
+        Responsive Grid Layout for "Fit to Viewport":
+        - Mobile (< md): Scroll allowed if content is too tall (fallback), but we try to flex.
+        - Tablet (md/lg): 3 cols, 2 rows. Fills height.
+        - Desktop (xl): 6 cols, 1 row. Fills height.
       */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 md:gap-4 lg:gap-6 max-w-[1600px] mx-auto pb-12">
+      <div className="flex-1 grid gap-2 md:gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 md:auto-rows-fr h-full">
         {questionsByCategory.map((cat) => {
           const Icon = IconMap[cat.iconName] || Globe;
           return (
-            <div key={cat.id} className="flex flex-col gap-2 md:gap-3">
+            <div key={cat.id} className="flex flex-col gap-1 md:gap-2 h-full min-h-0">
               {/* Category Header */}
-              <div className="bg-game-surface p-3 md:p-4 rounded-xl text-center shadow-lg border border-white/10 min-h-[5rem] md:h-28 lg:h-32 flex flex-col items-center justify-center group hover:bg-white/5 transition-colors">
-                <Icon className="text-game-accent mb-2 w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 group-hover:scale-110 transition-transform" />
-                <h3 className="font-display font-bold text-white text-base md:text-lg lg:text-xl leading-tight">{cat.title}</h3>
+              <div className="bg-game-surface p-1 md:p-2 rounded-lg md:rounded-xl text-center shadow-lg border border-white/10 flex flex-col items-center justify-center group hover:bg-white/5 transition-colors shrink-0 basis-16 md:basis-auto md:flex-[2]">
+                <Icon className="text-game-accent mb-1 w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 group-hover:scale-110 transition-transform" />
+                <h3 className="font-display font-bold text-white text-xs md:text-sm lg:text-lg xl:text-xl leading-tight truncate w-full px-1">{cat.title}</h3>
               </div>
 
               {/* Questions */}
-              <div className="grid grid-cols-3 sm:grid-cols-1 gap-2 md:gap-3">
+              <div className="flex-1 flex flex-col gap-1 md:gap-2 min-h-0">
                 {cat.questions.map((q) => {
                   const isAnswered = gameState.answeredQuestions.includes(q.id);
                   
@@ -59,10 +58,10 @@ export const GameBoard: React.FC<Props> = ({ gameState, onQuestionSelect }) => {
                       whileHover={!isAnswered ? { scale: 1.02, backgroundColor: '#4f46e5' } : {}}
                       whileTap={!isAnswered ? { scale: 0.95 } : {}}
                       className={`
-                        flex-1 rounded-xl font-display font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl shadow-md transition-all border-2
-                        flex items-center justify-center min-h-[50px] md:min-h-[70px] lg:min-h-[80px]
+                        flex-1 rounded-md md:rounded-lg lg:rounded-xl font-display font-bold text-base md:text-xl lg:text-2xl xl:text-3xl shadow-md transition-all border md:border-2
+                        flex items-center justify-center min-h-0
                         ${isAnswered 
-                          ? 'bg-black/20 text-white/25 border-transparent cursor-default' 
+                          ? 'bg-black/20 text-white/20 border-transparent cursor-default' 
                           : 'bg-white text-game-primary border-game-primary hover:text-white cursor-pointer'
                         }
                       `}

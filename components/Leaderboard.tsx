@@ -52,23 +52,22 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
   }, []);
 
   return (
-    <div className="h-screen w-full overflow-y-auto bg-game-dark">
-      <div className="relative flex flex-col items-center justify-center min-h-full p-4 md:p-8 overflow-hidden font-sans pb-20">
-        
-        {/* Confetti Background */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-           {Array.from({ length: 40 }).map((_, i) => (
-             <ConfettiParticle key={i} delay={Math.random() * 5} />
-           ))}
-        </div>
+    <div className="h-full w-full bg-game-dark flex flex-col items-center justify-center p-4 overflow-hidden relative">
+      {/* Confetti Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {Array.from({ length: 40 }).map((_, i) => (
+            <ConfettiParticle key={i} delay={Math.random() * 5} />
+          ))}
+      </div>
 
+      <div className="flex flex-col items-center justify-center w-full max-w-5xl h-full gap-4 md:gap-8 z-10">
         <motion.div 
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          className="z-10 text-center mb-6 md:mb-10 mt-10 md:mt-0"
+          className="text-center shrink-0"
         >
-          <div className="relative inline-block mb-4">
+          <div className="relative inline-block mb-2 md:mb-4">
              {/* Rotating burst behind trophy */}
              <motion.div 
                animate={{ rotate: 360 }}
@@ -76,32 +75,32 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
                className="absolute inset-0 -m-8 bg-gradient-to-tr from-yellow-400/20 to-transparent rounded-full blur-2xl"
              />
              
-             <Trophy className="relative w-32 h-32 md:w-48 md:h-48 text-yellow-400 drop-shadow-[0_0_25px_rgba(250,204,21,0.6)]" />
+             <Trophy className="relative w-24 h-24 md:w-40 md:h-40 text-yellow-400 drop-shadow-[0_0_25px_rgba(250,204,21,0.6)]" />
              
              <motion.div
                initial={{ scale: 0 }}
                animate={{ scale: [0, 1.2, 1] }}
                transition={{ delay: 0.5, times: [0, 0.6, 1] }}
-               className="absolute -top-4 -right-4 md:-top-6 md:-right-6 text-yellow-300"
+               className="absolute -top-2 -right-2 md:-top-4 md:-right-4 text-yellow-300"
              >
-                <Star fill="currentColor" className="animate-pulse w-12 h-12 md:w-16 md:h-16" />
+                <Star fill="currentColor" className="animate-pulse w-8 h-8 md:w-14 md:h-14" />
              </motion.div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-4 md:mb-6 drop-shadow-xl tracking-wider">
+          <h1 className="text-4xl md:text-7xl font-display font-bold text-white mb-2 md:mb-4 drop-shadow-xl tracking-wider">
             VICTORY!
           </h1>
           
-          <div className="inline-flex items-center gap-3 md:gap-4 bg-white/10 backdrop-blur-md px-6 py-3 md:px-10 md:py-4 rounded-full border border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.2)]">
-               <PartyPopper className="text-yellow-400 w-6 h-6 md:w-8 md:h-8" />
+          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-2 md:px-10 md:py-4 rounded-full border border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.2)]">
+               <PartyPopper className="text-yellow-400 w-5 h-5 md:w-8 md:h-8" />
                <div className="flex flex-col items-start">
                  <span className="text-[10px] md:text-xs uppercase text-yellow-400 font-bold tracking-widest">Champion</span>
-                 <span className={`text-2xl md:text-4xl font-bold text-white`}>{winner.name}</span>
+                 <span className={`text-xl md:text-4xl font-bold text-white`}>{winner.name}</span>
                </div>
           </div>
         </motion.div>
 
-        <div className="w-full max-w-4xl grid gap-3 md:gap-4 z-10 mb-8 md:mb-12 px-2 md:px-4">
+        <div className="w-full grid gap-2 md:gap-3 overflow-y-auto min-h-0 px-2 scrollbar-thin scrollbar-thumb-white/20">
           {sortedTeams.map((team, idx) => (
             <motion.div
               key={team.id}
@@ -109,7 +108,7 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 + idx * 0.15, type: "spring", bounce: 0.4 }}
               className={`
-                  relative flex items-center justify-between p-3 md:p-5 rounded-xl md:rounded-2xl border transition-all hover:scale-[1.02]
+                  relative flex items-center justify-between p-3 md:p-4 rounded-xl border transition-all shrink-0
                   ${idx === 0 
                     ? 'bg-gradient-to-r from-yellow-900/40 to-game-surface border-yellow-500/50 shadow-lg' 
                     : 'bg-white/5 border-white/5 hover:bg-white/10'
@@ -118,31 +117,26 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
             >
               {/* Rank Indicator */}
               <div className="flex items-center gap-3 md:gap-6">
-                <div className="flex items-center justify-center w-8 md:w-14 shrink-0">
-                    {idx === 0 && <Medal className="w-8 h-8 md:w-12 md:h-12 text-yellow-400 drop-shadow-lg" />}
-                    {idx === 1 && <Medal className="w-6 h-6 md:w-10 md:h-10 text-gray-300" />}
-                    {idx === 2 && <Medal className="w-6 h-6 md:w-10 md:h-10 text-amber-700" />}
-                    {idx > 2 && <span className="text-lg md:text-2xl font-bold text-white/30">#{idx + 1}</span>}
+                <div className="flex items-center justify-center w-8 md:w-12 shrink-0">
+                    {idx === 0 && <Medal className="w-6 h-6 md:w-10 md:h-10 text-yellow-400 drop-shadow-lg" />}
+                    {idx === 1 && <Medal className="w-5 h-5 md:w-8 md:h-8 text-gray-300" />}
+                    {idx === 2 && <Medal className="w-5 h-5 md:w-8 md:h-8 text-amber-700" />}
+                    {idx > 2 && <span className="text-base md:text-xl font-bold text-white/30">#{idx + 1}</span>}
                 </div>
 
-                <div className={`w-2 h-8 md:w-3 md:h-12 rounded-full ${team.color} shadow-[0_0_10px_currentColor]`}></div>
+                <div className={`w-2 h-8 md:w-3 md:h-10 rounded-full ${team.color} shadow-[0_0_10px_currentColor]`}></div>
                 
-                <span className={`text-xl md:text-3xl font-bold truncate max-w-[150px] md:max-w-none ${idx === 0 ? 'text-white' : 'text-gray-200'}`}>
+                <span className={`text-lg md:text-2xl font-bold truncate max-w-[120px] md:max-w-none ${idx === 0 ? 'text-white' : 'text-gray-200'}`}>
                   {team.name}
                 </span>
               </div>
 
               <div className="flex items-baseline gap-1 md:gap-2">
-                  <span className={`text-3xl md:text-5xl font-display font-bold ${idx === 0 ? 'text-yellow-400' : 'text-white'}`}>
+                  <span className={`text-2xl md:text-4xl font-display font-bold ${idx === 0 ? 'text-yellow-400' : 'text-white'}`}>
                       {team.score}
                   </span>
                   <span className="text-xs md:text-sm font-bold uppercase text-white/40">pts</span>
               </div>
-              
-              {/* Winner Glow */}
-              {idx === 0 && (
-                  <div className="absolute inset-0 rounded-2xl border-2 border-yellow-400/20 pointer-events-none animate-pulse"></div>
-              )}
             </motion.div>
           ))}
         </div>
@@ -151,9 +145,9 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
           whileHover={{ scale: 1.05, backgroundColor: "#6366f1" }}
           whileTap={{ scale: 0.95 }}
           onClick={onReset}
-          className="z-20 flex items-center gap-2 md:gap-3 px-6 py-3 md:px-10 md:py-5 bg-game-primary text-white rounded-xl md:rounded-2xl text-lg md:text-2xl font-bold shadow-2xl transition-all border border-indigo-400 ring-4 ring-indigo-500/20"
+          className="shrink-0 flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 bg-game-primary text-white rounded-xl md:rounded-2xl text-lg md:text-xl font-bold shadow-2xl transition-all border border-indigo-400 ring-4 ring-indigo-500/20"
         >
-          <RefreshCcw size={20} className="md:w-7 md:h-7" /> Start New Game
+          <RefreshCcw size={20} className="md:w-6 md:h-6" /> New Game
         </motion.button>
       </div>
     </div>
