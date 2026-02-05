@@ -39,38 +39,36 @@ export const GameBoard: React.FC<Props> = ({ gameState, onQuestionSelect }) => {
           const Icon = IconMap[cat.iconName] || Globe;
           return (
             <div key={cat.id} className="flex flex-col gap-1 md:gap-2 h-full min-h-0">
-              {/* Category Header */}
-              <div className="bg-game-surface p-1 md:p-2 rounded-lg md:rounded-xl text-center shadow-lg border border-white/10 flex flex-col items-center justify-center group hover:bg-white/5 transition-colors shrink-0 basis-16 md:basis-auto md:flex-[2]">
+              {/* Category Header - Now flex-1 to share space equally with buttons */}
+              <div className="flex-1 bg-game-surface p-1 md:p-2 rounded-lg md:rounded-xl text-center shadow-lg border border-white/10 flex flex-col items-center justify-center group hover:bg-white/5 transition-colors min-h-0">
                 <Icon className="text-game-accent mb-1 w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 group-hover:scale-110 transition-transform" />
                 <h3 className="font-display font-bold text-white text-xs md:text-sm lg:text-lg xl:text-xl leading-tight truncate w-full px-1">{cat.title}</h3>
               </div>
 
-              {/* Questions */}
-              <div className="flex-1 flex flex-col gap-1 md:gap-2 min-h-0">
-                {cat.questions.map((q) => {
-                  const isAnswered = gameState.answeredQuestions.includes(q.id);
-                  
-                  return (
-                    <motion.button
-                      key={q.id}
-                      disabled={isAnswered}
-                      onClick={() => onQuestionSelect(q.id)}
-                      whileHover={!isAnswered ? { scale: 1.02, backgroundColor: '#4f46e5' } : {}}
-                      whileTap={!isAnswered ? { scale: 0.95 } : {}}
-                      className={`
-                        flex-1 rounded-md md:rounded-lg lg:rounded-xl font-display font-bold text-base md:text-xl lg:text-2xl xl:text-3xl shadow-md transition-all border md:border-2
-                        flex items-center justify-center min-h-0
-                        ${isAnswered 
-                          ? 'bg-black/20 text-white/20 border-transparent cursor-default' 
-                          : 'bg-white text-game-primary border-game-primary hover:text-white cursor-pointer'
-                        }
-                      `}
-                    >
-                      {isAnswered ? '' : q.points}
-                    </motion.button>
-                  );
-                })}
-              </div>
+              {/* Questions - Rendered directly in parent flex container to ensure equal distribution */}
+              {cat.questions.map((q) => {
+                const isAnswered = gameState.answeredQuestions.includes(q.id);
+                
+                return (
+                  <motion.button
+                    key={q.id}
+                    disabled={isAnswered}
+                    onClick={() => onQuestionSelect(q.id)}
+                    whileHover={!isAnswered ? { scale: 1.02, backgroundColor: '#4f46e5' } : {}}
+                    whileTap={!isAnswered ? { scale: 0.95 } : {}}
+                    className={`
+                      flex-1 rounded-md md:rounded-lg lg:rounded-xl font-display font-bold text-base md:text-xl lg:text-2xl xl:text-3xl shadow-md transition-all border md:border-2
+                      flex items-center justify-center min-h-0
+                      ${isAnswered 
+                        ? 'bg-black/20 text-white/20 border-transparent cursor-default' 
+                        : 'bg-white text-game-primary border-game-primary hover:text-white cursor-pointer'
+                      }
+                    `}
+                  >
+                    {isAnswered ? '' : q.points}
+                  </motion.button>
+                );
+              })}
             </div>
           );
         })}
