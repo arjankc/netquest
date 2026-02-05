@@ -52,22 +52,22 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
   }, []);
 
   return (
-    <div className="h-full w-full bg-game-dark flex flex-col items-center justify-center p-4 overflow-hidden relative">
+    <div className="h-full w-full bg-game-dark overflow-y-auto relative">
       {/* Confetti Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none sticky top-0 h-screen">
           {Array.from({ length: 40 }).map((_, i) => (
             <ConfettiParticle key={i} delay={Math.random() * 5} />
           ))}
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full max-w-5xl h-full gap-4 md:gap-8 z-10">
+      <div className="flex flex-col items-center justify-center min-h-full p-4 py-8 relative z-10 gap-6 md:gap-8">
         <motion.div 
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          className="text-center shrink-0"
+          className="text-center shrink-0 mt-4"
         >
-          <div className="relative inline-block mb-2 md:mb-4">
+          <div className="relative inline-block mb-4 md:mb-6">
              {/* Rotating burst behind trophy */}
              <motion.div 
                animate={{ rotate: 360 }}
@@ -75,7 +75,7 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
                className="absolute inset-0 -m-8 bg-gradient-to-tr from-yellow-400/20 to-transparent rounded-full blur-2xl"
              />
              
-             <Trophy className="relative w-24 h-24 md:w-40 md:h-40 text-yellow-400 drop-shadow-[0_0_25px_rgba(250,204,21,0.6)]" />
+             <Trophy className="relative w-24 h-24 md:w-48 md:h-48 text-yellow-400 drop-shadow-[0_0_25px_rgba(250,204,21,0.6)]" />
              
              <motion.div
                initial={{ scale: 0 }}
@@ -83,7 +83,7 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
                transition={{ delay: 0.5, times: [0, 0.6, 1] }}
                className="absolute -top-2 -right-2 md:-top-4 md:-right-4 text-yellow-300"
              >
-                <Star fill="currentColor" className="animate-pulse w-8 h-8 md:w-14 md:h-14" />
+                <Star fill="currentColor" className="animate-pulse w-8 h-8 md:w-16 md:h-16" />
              </motion.div>
           </div>
 
@@ -100,7 +100,7 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
           </div>
         </motion.div>
 
-        <div className="w-full grid gap-2 md:gap-3 overflow-y-auto min-h-0 px-2 scrollbar-thin scrollbar-thumb-white/20">
+        <div className="w-full max-w-4xl grid gap-3 md:gap-4 px-2 mb-4">
           {sortedTeams.map((team, idx) => (
             <motion.div
               key={team.id}
@@ -108,9 +108,9 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 + idx * 0.15, type: "spring", bounce: 0.4 }}
               className={`
-                  relative flex items-center justify-between p-3 md:p-4 rounded-xl border transition-all shrink-0
+                  relative flex items-center justify-between p-3 md:p-5 rounded-xl border transition-all
                   ${idx === 0 
-                    ? 'bg-gradient-to-r from-yellow-900/40 to-game-surface border-yellow-500/50 shadow-lg' 
+                    ? 'bg-gradient-to-r from-yellow-900/40 to-game-surface border-yellow-500/50 shadow-lg scale-105' 
                     : 'bg-white/5 border-white/5 hover:bg-white/10'
                   }
               `}
@@ -118,13 +118,13 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
               {/* Rank Indicator */}
               <div className="flex items-center gap-3 md:gap-6">
                 <div className="flex items-center justify-center w-8 md:w-12 shrink-0">
-                    {idx === 0 && <Medal className="w-6 h-6 md:w-10 md:h-10 text-yellow-400 drop-shadow-lg" />}
+                    {idx === 0 && <Medal className="w-6 h-6 md:w-12 md:h-12 text-yellow-400 drop-shadow-lg" />}
                     {idx === 1 && <Medal className="w-5 h-5 md:w-8 md:h-8 text-gray-300" />}
                     {idx === 2 && <Medal className="w-5 h-5 md:w-8 md:h-8 text-amber-700" />}
                     {idx > 2 && <span className="text-base md:text-xl font-bold text-white/30">#{idx + 1}</span>}
                 </div>
 
-                <div className={`w-2 h-8 md:w-3 md:h-10 rounded-full ${team.color} shadow-[0_0_10px_currentColor]`}></div>
+                <div className={`w-2 h-8 md:w-3 md:h-12 rounded-full ${team.color} shadow-[0_0_10px_currentColor]`}></div>
                 
                 <span className={`text-lg md:text-2xl font-bold truncate max-w-[120px] md:max-w-none ${idx === 0 ? 'text-white' : 'text-gray-200'}`}>
                   {team.name}
@@ -145,9 +145,9 @@ export const Leaderboard: React.FC<Props> = ({ gameState, onReset }) => {
           whileHover={{ scale: 1.05, backgroundColor: "#6366f1" }}
           whileTap={{ scale: 0.95 }}
           onClick={onReset}
-          className="shrink-0 flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 bg-game-primary text-white rounded-xl md:rounded-2xl text-lg md:text-xl font-bold shadow-2xl transition-all border border-indigo-400 ring-4 ring-indigo-500/20"
+          className="mb-8 flex items-center gap-2 md:gap-3 px-8 py-4 bg-game-primary text-white rounded-xl md:rounded-2xl text-xl md:text-2xl font-bold shadow-2xl transition-all border border-indigo-400 ring-4 ring-indigo-500/20"
         >
-          <RefreshCcw size={20} className="md:w-6 md:h-6" /> New Game
+          <RefreshCcw size={24} className="md:w-8 md:h-8" /> New Game
         </motion.button>
       </div>
     </div>
